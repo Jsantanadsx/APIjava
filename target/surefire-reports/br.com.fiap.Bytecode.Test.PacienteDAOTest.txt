@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: br.com.fiap.Bytecode.Test.PacienteDAOTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.090 s -- in br.com.fiap.Bytecode.Test.PacienteDAOTest

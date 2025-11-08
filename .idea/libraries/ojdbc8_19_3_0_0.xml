@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ojdbc8-19.3.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../FIAP-SPRINT3/JAVA/Driver 'ojdbc8'/ojdbc8-19.3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
