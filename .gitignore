@@ -1,7 +1,11 @@
-#target/
-#!.mvn/wrapper/maven-wrapper.jar
-#!**/src/main/**/target/
-#!**/src/test/**/target/
+# Ignora TODOS os arquivos na pasta target
+target/
+
+# Adiciona uma EXCEÇÃO:
+# NÃO ignore o arquivo .jar que precisamos para o deploy!
+!target/teleconsultas-1.0.0-SNAPSHOT.jar
+
+# ----- O resto do seu arquivo (IntelliJ, Eclipse, etc.) -----
 #.kotlin
 
 ### IntelliJ IDEA ###
