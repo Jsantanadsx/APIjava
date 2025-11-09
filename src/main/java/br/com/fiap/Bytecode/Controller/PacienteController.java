@@ -1,4 +1,5 @@
 package br.com.fiap.Bytecode.Controller;
+
 import br.com.fiap.Bytecode.Controller.dto.RegistroRequest;
 import br.com.fiap.Bytecode.DAO.PacienteDAO;
 import br.com.fiap.Bytecode.Factory.ConnectionFactory;
@@ -8,12 +9,29 @@ import br.com.fiap.Bytecode.Service.PacienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pacientes")
 @CrossOrigin(origins = "*") // Permite acesso do front-end
 public class PacienteController {
+
+    @GetMapping
+    public ResponseEntity<List<Paciente>> listarTodosPacientes() {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PacienteDAO pacienteDAO = new PacienteDAO(connection);
+            List<Paciente> pacientes = pacienteDAO.listar();
+
+            return ResponseEntity.ok(pacientes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarNovoPaciente(@RequestBody RegistroRequest request) {

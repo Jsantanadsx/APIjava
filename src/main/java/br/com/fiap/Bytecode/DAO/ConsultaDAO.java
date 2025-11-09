@@ -14,9 +14,6 @@ public class ConsultaDAO {
         this.connection = connection;
     }
 
-    /**
-     * Insere uma consulta no banco e atualiza o objeto 'consulta' com o ID gerado.
-     */
     public void inserir(Consulta consulta) throws SQLException {
         String sql = "INSERT INTO TB_BTC_CONSULTA (id_paciente, data_hora_consulta, link_consulta, status_consulta) VALUES (?, ?, ?, ?)";
 
@@ -77,9 +74,21 @@ public class ConsultaDAO {
         return lista;
     }
 
-    /**
-     * Atualiza os dados de uma consulta existente.
-     */
+    public List<Consulta> listar() throws SQLException {
+        List<Consulta> lista = new ArrayList<>();
+        String sql = "SELECT * FROM TB_BTC_CONSULTA ORDER BY data_hora_consulta DESC";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(instanciarConsulta(rs));
+            }
+        }
+        return lista;
+    }
+
+
     public void atualizar(Consulta consulta) throws SQLException {
         String sql = "UPDATE TB_BTC_CONSULTA SET id_paciente = ?, data_hora_consulta = ?, link_consulta = ?, status_consulta = ? WHERE id_consulta = ?";
 
@@ -94,9 +103,6 @@ public class ConsultaDAO {
         }
     }
 
-    /**
-     * Exclui uma consulta do banco pelo seu ID.
-     */
     public void excluir(int id) throws SQLException {
         String sql = "DELETE FROM TB_BTC_CONSULTA WHERE id_consulta = ?";
 
@@ -106,9 +112,6 @@ public class ConsultaDAO {
         }
     }
 
-    /**
-     * Método utilitário para criar um objeto Consulta a partir de um ResultSet.
-     */
     private Consulta instanciarConsulta(ResultSet rs) throws SQLException {
         Consulta consulta = new Consulta();
         consulta.setIdConsulta(rs.getInt("id_consulta"));

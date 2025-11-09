@@ -18,8 +18,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/consultas")
-@CrossOrigin(origins = "*") // Permite acesso do front-end
+@CrossOrigin(origins = "*") // Permite chamadas de qualquer front-end (Ex: React)
 public class ConsultaController {
+
+    @GetMapping
+    public ResponseEntity<List<Consulta>> listarTodasConsultas() {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            ConsultaDAO consultaDAO = new ConsultaDAO(connection);
+            List<Consulta> consultas = consultaDAO.listar();
+
+            return ResponseEntity.ok(consultas);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PostMapping("/agendar")
     public ResponseEntity<?> agendarConsulta(@RequestBody AgendamentoRequest request) {
@@ -60,9 +74,9 @@ public class ConsultaController {
             PosConsulta posConsulta = posConsultaDAO.buscarPorIdConsulta(idConsulta);
 
             if (posConsulta != null) {
-                return ResponseEntity.ok(posConsulta);
+                return ResponseEntity.ok(posConsulta); // 200 OK
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build(); // 404 Not Found
             }
 
         } catch (Exception e) {
